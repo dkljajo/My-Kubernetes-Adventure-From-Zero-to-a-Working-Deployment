@@ -120,7 +120,7 @@ This journey taught me:
 
 | Pod Details                                    | `kubectl get all`                                      |
 | ---------------------------------------------- | ------------------------------------------------------ |
-| ![Pod Details](./images/60.png) | ![kubectl get all](.images/80.png) |
+| ![Pod Details](./images/60.png) | ![kubectl get all](./images/80.png) |
 
 
 ---
