@@ -58,7 +58,7 @@ spec:
 
 After applying the Deployment, I checked whether Kubernetes accepted the configuration.
 
-![Initial deployment attempt](./images/1.png)
+![Initial deployment attempt](./images/2.png)
 
 ---
 
@@ -66,7 +66,7 @@ After applying the Deployment, I checked whether Kubernetes accepted the configu
 
 After creating the Deployment, I checked the Pod status. This confirmed that Kubernetes was attempting to run the application.
 
-![Checking pods](./images/2.png)
+![Checking pods](./images/4.png)
 
 ---
 
@@ -74,7 +74,7 @@ After creating the Deployment, I checked the Pod status. This confirmed that Kub
 
 At this point, I ran into validation and configuration issues. Some YAML fields were misplaced, and Kubernetes rejected the configuration. This forced me to revisit label matching and structure.
 
-![Validation error](./images/4.png)
+![Validation error](./images/5.png)
 
 ---
 
@@ -82,7 +82,7 @@ At this point, I ran into validation and configuration issues. Some YAML fields 
 
 After correcting the YAML (labels, selectors, and container configuration), the Deployment finally stabilized. All replicas were running successfully.
 
-![Deployment fixed](./images/5.png)
+![Deployment fixed](./images/11.png)
 
 ---
 
@@ -107,7 +107,7 @@ spec:
 
 After applying the Service, Kubernetes successfully created it, but external access still needed verification.
 
-![Service created](./images/11.png)
+![Service created](./images/13.png)
 
 ---
 
@@ -115,7 +115,7 @@ After applying the Service, Kubernetes successfully created it, but external acc
 
 Even though the Service existed, accessing it from the browser failed. This revealed that networking or firewall rules were blocking the NodePort.
 
-![NodePort unreachable](./images/13.png)
+![NodePort unreachable](./images/20.png)
 
 ---
 
@@ -123,7 +123,7 @@ Even though the Service existed, accessing it from the browser failed. This reve
 
 I identified that UFW was blocking the NodePort range. After explicitly allowing the NodePort, traffic could finally reach the cluster.
 
-![UFW configuration](./images/20.png)
+![UFW configuration](./images/31.png)
 
 ---
 
@@ -131,7 +131,7 @@ I identified that UFW was blocking the NodePort range. After explicitly allowing
 
 Once the firewall rule was added, the Nginx welcome page loaded successfully in the browser — a clear sign that everything was working end‑to‑end.
 
-![Nginx welcome page](./images/31.png)
+![Nginx welcome page](./images/50.png)
 
 ---
 
@@ -139,7 +139,7 @@ Once the firewall rule was added, the Nginx welcome page loaded successfully in 
 
 I verified the full state of the cluster using `kubectl get all`, ensuring Deployments, ReplicaSets, Pods, and Services were healthy.
 
-![kubectl get all](./images/50.png)
+![kubectl get all](./images/60.png)
 
 ---
 
@@ -147,7 +147,7 @@ I verified the full state of the cluster using `kubectl get all`, ensuring Deplo
 
 The final state shows a fully functional Kubernetes setup: running Pods, exposed Service, open firewall port, and a reachable web application.
 
-![Final state](./images/60.png)
+![Final state](./images/80.png)
 
 ---
 
