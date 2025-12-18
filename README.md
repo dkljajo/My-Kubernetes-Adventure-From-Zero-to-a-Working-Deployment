@@ -18,6 +18,11 @@ This project documents my journey deploying an Nginx application on Kubernetes. 
 ## Introduction
 
 Deploying Kubernetes can be challenging. Matching labels, correct YAML structure, and network accessibility are all critical. This guide shows my journey from “it doesn’t work” to “live and accessible.”
+First I installed Minicube locally on my laptop:
+![](./images/2.png)
+
+![](./images/4.png)
+
 
 ---
 
@@ -56,9 +61,9 @@ spec:
         - containerPort: 80
 ```
 
-After applying the Deployment, I checked whether Kubernetes accepted the configuration.
 
-![Initial deployment attempt](./images/2.png)
+
+![](./images/5.png)
 
 ---
 
@@ -66,7 +71,7 @@ After applying the Deployment, I checked whether Kubernetes accepted the configu
 
 After creating the Deployment, I checked the Pod status. This confirmed that Kubernetes was attempting to run the application.
 
-![Checking pods](./images/4.png)
+![Checking pods](./images/1.png)
 
 ---
 
@@ -74,7 +79,7 @@ After creating the Deployment, I checked the Pod status. This confirmed that Kub
 
 At this point, I ran into validation and configuration issues. Some YAML fields were misplaced, and Kubernetes rejected the configuration. This forced me to revisit label matching and structure.
 
-![Validation error](./images/5.png)
+
 
 ---
 
@@ -107,7 +112,7 @@ spec:
 
 After applying the Service, Kubernetes successfully created it, but external access still needed verification.
 
-![Service created](./images/13.png)
+
 
 ---
 
@@ -115,7 +120,7 @@ After applying the Service, Kubernetes successfully created it, but external acc
 
 Even though the Service existed, accessing it from the browser failed. This revealed that networking or firewall rules were blocking the NodePort.
 
-![NodePort unreachable](./images/20.png)
+
 
 ---
 
@@ -123,7 +128,7 @@ Even though the Service existed, accessing it from the browser failed. This reve
 
 I identified that UFW was blocking the NodePort range. After explicitly allowing the NodePort, traffic could finally reach the cluster.
 
-![UFW configuration](./images/31.png)
+![UFW configuration](./images/8.png)
 
 ---
 
@@ -135,11 +140,7 @@ Once the firewall rule was added, the Nginx welcome page loaded successfully in 
 
 ---
 
-### Step 9 – Cluster Verification
 
-I verified the full state of the cluster using `kubectl get all`, ensuring Deployments, ReplicaSets, Pods, and Services were healthy.
-
-![kubectl get all](./images/60.png)
 
 ---
 
@@ -163,4 +164,4 @@ After multiple failed attempts, troubleshooting steps, and learning moments — 
 
 ---
 
-**From confusion to clarity — one NodePort at a time. 🚀**
+**From confusion to clarity — one NodePort at a time. **
