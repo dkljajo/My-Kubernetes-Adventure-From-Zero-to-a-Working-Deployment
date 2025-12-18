@@ -21,9 +21,15 @@ Deploying Kubernetes can be challenging. Matching labels, correct YAML structure
 
 ---
 
-## Deployment Creation
+## The Journey (Aligned With Screenshots)
 
-I created the Nginx Deployment with correct labels, replicas, and container ports:
+Below is the real story of this Kubernetes task, aligned **step‑by‑step with the actual screenshots** captured during troubleshooting and validation.
+
+---
+
+### Step 1 – First Deployment Attempt
+
+I started by creating my first Kubernetes Deployment. This YAML defines an **Nginx Deployment** with three replicas. At this stage, my goal was simply to get Pods running.
 
 ```yaml
 apiVersion: apps/v1
@@ -50,27 +56,39 @@ spec:
         - containerPort: 80
 ```
 
-| Deployment Applied                                     | Pods Running                                             |
-| ------------------------------------------------------ | -------------------------------------------------------- |
-| ![Deployment Applied](./images/1.png) | ![Pods Running](./images/2.png) |
+After applying the Deployment, I checked whether Kubernetes accepted the configuration.
 
-*Pods successfully created, 3 replicas running.*
+![Initial deployment attempt](./images/1.png)
 
 ---
 
-## Troubleshooting Errors
+### Step 2 – Pods Created but Not Yet Verified
 
-I encountered YAML validation errors due to mismatched labels and misconfigured ports. Fixing the Deployment allowed Pods to reach `Running` status.
+After creating the Deployment, I checked the Pod status. This confirmed that Kubernetes was attempting to run the application.
 
-| Error Example                                           | Fixed Deployment                                            |
-| ------------------------------------------------------- | ----------------------------------------------------------- |
-| ![Validation Error](./images/4.png) | ![Corrected Deployment](./images/5.png) |
+![Checking pods](./images/2.png)
 
 ---
 
-## Service Exposure
+### Step 3 – Validation & Configuration Errors
 
-To access Nginx externally, I created a NodePort Service:
+At this point, I ran into validation and configuration issues. Some YAML fields were misplaced, and Kubernetes rejected the configuration. This forced me to revisit label matching and structure.
+
+![Validation error](./images/4.png)
+
+---
+
+### Step 4 – Deployment Fixed and Pods Running
+
+After correcting the YAML (labels, selectors, and container configuration), the Deployment finally stabilized. All replicas were running successfully.
+
+![Deployment fixed](./images/5.png)
+
+---
+
+### Step 5 – Service Creation
+
+With the Pods running, I needed a way to expose them externally. For that, I created a **NodePort Service**. This Service forwards traffic from a node port to port 80 on the Nginx containers.
 
 ```yaml
 apiVersion: v1
@@ -87,42 +105,62 @@ spec:
       nodePort: 30080
 ```
 
-| Service Created                                     | Cluster & Pods Info                                    |
-| --------------------------------------------------- | ------------------------------------------------------ |
-| ![Service Created](./images/11.png) | ![Service Details](./images/20.png) |
+After applying the Service, Kubernetes successfully created it, but external access still needed verification.
+
+![Service created](./images/11.png)
 
 ---
 
-## Firewall & NodePort
+### Step 6 – NodePort Not Reachable
 
-The NodePort was initially blocked by UFW. After opening the port:
+Even though the Service existed, accessing it from the browser failed. This revealed that networking or firewall rules were blocking the NodePort.
 
-```bash
-sudo ufw allow 30080/tcp
-sudo ufw status
-```
-
-I could access the application at `http://<node-ip>:30080`.
-
-| NodePort Accessible                                     | Web Page Served                                     |
-| ------------------------------------------------------- | --------------------------------------------------- |
-| ![NodePort Access](./images/31.png) | ![Nginx Web Page](./images/50.png) |
+![NodePort unreachable](./images/13.png)
 
 ---
 
-## Conclusion & Screenshots
+### Step 7 – Firewall Investigation (UFW)
 
-This journey taught me:
+I identified that UFW was blocking the NodePort range. After explicitly allowing the NodePort, traffic could finally reach the cluster.
 
-- Deployment and Pod labels must match  
-- NodePort access requires firewall configuration  
-- Kubernetes troubleshooting is iterative and rewarding
-
-| Pod Details                                    | `kubectl get all`                                      |
-| ---------------------------------------------- | ------------------------------------------------------ |
-| ![Pod Details](./images/60.png) | ![kubectl get all](./images/80.png) |
-
+![UFW configuration](./images/20.png)
 
 ---
 
-**Enjoy exploring Kubernetes!**
+### Step 8 – Successful Web Access
+
+Once the firewall rule was added, the Nginx welcome page loaded successfully in the browser — a clear sign that everything was working end‑to‑end.
+
+![Nginx welcome page](./images/31.png)
+
+---
+
+### Step 9 – Cluster Verification
+
+I verified the full state of the cluster using `kubectl get all`, ensuring Deployments, ReplicaSets, Pods, and Services were healthy.
+
+![kubectl get all](./images/50.png)
+
+---
+
+### Step 10 – Final Stable State
+
+The final state shows a fully functional Kubernetes setup: running Pods, exposed Service, open firewall port, and a reachable web application.
+
+![Final state](./images/60.png)
+
+---
+
+## Conclusion
+
+This task was far more than just applying YAML files. It involved understanding:
+
+* How Deployments and Services interact
+* Why labels and selectors must match
+* Where networking and firewall rules fit into Kubernetes
+
+After multiple failed attempts, troubleshooting steps, and learning moments — everything finally worked. The screenshots above tell the real story of persistence, debugging, and success.
+
+---
+
+**From confusion to clarity — one NodePort at a time. 🚀**
