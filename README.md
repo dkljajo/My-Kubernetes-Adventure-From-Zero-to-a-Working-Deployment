@@ -13,3 +13,26 @@ The process took multiple rounds of trial and error, applying YAMLs, checking lo
 This exercise taught me that Kubernetes isn’t just about YAML files and commands — it’s about understanding the underlying system, thinking like both a developer and a network administrator, and methodically solving problems. The journey from “it doesn’t work” to “it’s live and accessible” was challenging but immensely satisfying.
 
 ![](./images/1.png)
+
+
+![](./images/2.png)
+
+
+![](./images/4.png)
+
+
+![](./images/5.png)
+
+
+![](./images/11.png)
+
+
+![](./images/13.png)
+
+![](./images/20.png)
+
+![](./images/31.png)
+
+![](./images/50.png)
+
+
