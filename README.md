@@ -120,9 +120,8 @@ This journey taught me:
 
 | Pod Details                                    | `kubectl get all`                                      |
 | ---------------------------------------------- | ------------------------------------------------------ |
-| ![Pod Details](screenshots/09-pod-details.png) | ![kubectl get all](screenshots/10-kubectl-get-all.png) |
+| ![Pod Details](./images/60.png) | ![kubectl get all](.images/80.png) |
 
-All screenshots are in the [`screenshots/`](screenshots/) folder. This README now serves as both a **story and visual guide** for deploying a simple Kubernetes application.
 
 ---
 
