@@ -1,4 +1,4 @@
-# My-Kubernetes-Adventure-From-Zero-to-a-Working-Deployment
+# My Kubernetes Adventure: From Zero to a Working Deployment
 
 I recently embarked on a journey to deploy a simple Nginx application on Kubernetes, thinking it would be straightforward. Little did I know, it would turn into a full-on troubleshooting saga that tested my patience, persistence, and problem-solving skills.
 
